@@ -1,12 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Header } from './components';
+import { Provider } from 'react-redux';
 import {
     Home,
     ActorDetails,
     ShowDetails,
 } from 'pages';
-import { StoreProvider } from 'stores';
+import { Header } from 'components';
+import store from 'stores/store';
+
 import { StateMachineProvider } from './fsm';
 import states from './states';
 
@@ -14,7 +16,7 @@ function App() {
     return (
         <div>
             <StateMachineProvider states={states}>
-                <StoreProvider>
+                <Provider store={store}>
                     <Router>
                         <Header></Header>
                         <Switch>
@@ -29,7 +31,7 @@ function App() {
                             </Route>
                         </Switch>
                     </Router>
-                </StoreProvider>
+                </Provider>
             </StateMachineProvider>
         </div>
     );

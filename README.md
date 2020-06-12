@@ -77,6 +77,8 @@ This uses the [tvmaze api](http://www.tvmaze.com/api), which is free, not always
 
 The app uses the FSM for transitioning between states and making the relevant route change using the `afterTransition` hook.
 
+Unlike `master` branch, this branch uses `redux-toolkit` instead of `mobx`
+
 It is possible to see the FSM state change due to transitions in the DevTools console.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

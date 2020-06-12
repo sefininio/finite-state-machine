@@ -1,23 +1,22 @@
 import React from 'react';
-import { useObserver } from 'mobx-react-lite';
+import { useSelector } from 'react-redux';
 
-import { useStore } from 'hooks';
 import { Tile, TileTypes } from 'components'
 import Styled from './styled-components';
 
 const List = () => {
 
-    const { showsStore } = useStore();
+    const { shows } = useSelector((state) => state.show);
 
-    return useObserver(() => (
+    return (
         <Styled.List>
-            { showsStore.showsPlain.map((show) => {
+            { shows.map((show) => {
                 return (
                     <Tile type={TileTypes.show} data={show} key={show.id} hideSummary hideName />
                 );
             })}
         </Styled.List>
-    ));
+    );
 };
 
 export default List;

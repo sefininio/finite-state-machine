@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useObserver } from 'mobx-react-lite';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { useStore } from 'hooks';
 import { Tile, TileTypes } from 'components';
 import Styled from './styled-components';
 
@@ -10,7 +9,8 @@ function ActorDetails() {
 
     const [credits, setCredits] = useState(null);
     const { actorId } = useParams();
-    const { actorStore } = useStore();
+    const dispatch = useDispatch();
+    const { actor } = useSelector((state) => state.actor);
 
     useEffect(() => {
         // fetch actor credits (which shows he/she played in)
@@ -20,10 +20,10 @@ function ActorDetails() {
             .then(credits => setCredits(credits));
     }, [actorId])
 
-    return useObserver(() => (
+    return (
         <div>
-            {actorStore.actor && (
-                <Tile type={TileTypes.actor} data={actorStore.actor} />
+            {actor && (
+                <Tile type={TileTypes.actor} data={actor} />
             )}
             <Styled.Credits>
                 {credits && credits.map(show => (
@@ -31,7 +31,7 @@ function ActorDetails() {
                 ))}
             </Styled.Credits>
         </div>
-    ));
+    );
 }
 
 export default ActorDetails;

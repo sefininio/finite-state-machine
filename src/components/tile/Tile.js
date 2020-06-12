@@ -1,25 +1,25 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import get from 'lodash/get';
+import { useDispatch } from 'react-redux';
 
 import { TileTypes } from '../';
-import { useStore } from 'hooks';
+import { setCurrentShow } from 'stores/showSlice';
+import { setActor } from 'stores/actorSlice';
 import { useStateMachine } from 'fsm';
 import Styled from './styled-components';
 
 const Tile = ({ type, data, hideSummary, hideName }) => {
 
     const history = useHistory();
-    const {
-        showsStore,
-        actorStore,
-    } = useStore();
+    const dispatch = useDispatch();
+
     const machine = useStateMachine();
 
     const handleClick = () => {
         switch(type) {
             case TileTypes.show:
-                showsStore.setCurrentShow(data);
+                dispatch(setCurrentShow(data));
                 machine.currentState.toShow({
                     action: {
                         afterTransition: () => history.push(`/show/${data.id}`),
@@ -27,7 +27,7 @@ const Tile = ({ type, data, hideSummary, hideName }) => {
                 });
                 break;
             case TileTypes.character:
-                actorStore.setActor(data);
+                dispatch(setActor(data));
                 machine.currentState.toActor({
                     action: {
                         afterTransition: () => history.push(`/actor/${data.person.id}`),
